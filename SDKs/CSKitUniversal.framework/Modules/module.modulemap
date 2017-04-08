@@ -1,0 +1,10 @@
+framework module CSKitUniversal {
+  umbrella header "CSKitUniversal.h"
+
+  export *
+  module * { export * }
+}
+
+module CSKitUniversal.Swift {
+    header "CSKitUniversal-Swift.h"
+}
