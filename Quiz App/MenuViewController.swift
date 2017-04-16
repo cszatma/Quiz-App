@@ -9,27 +9,32 @@
 //Special Version of CSKit that runs on iPhone and Simulator (built for both architectures)
 import CSKitUniversal
 
-class ViewController: UIViewController {
+class MenuViewController: UIViewController {
     
-    @IBOutlet var viewQuestionButton: UIButton!
+    @IBOutlet weak var questionButton: CSButton!
+    @IBOutlet weak var statsButton: CSButton!
+    @IBOutlet weak var settingsButton: CSButton!
     
     var questions: [Question]!
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadQuestionsFromServer() { loadedQuestions in
-            self.questions = loadedQuestions
-            }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logoutUser))
+        setUpButtons()
     }
     
-    func loadData() {
-        guard let
+    func setUpButtons() {
+        let buttons = [questionButton, statsButton, settingsButton]
+        for button in buttons {
+            button?.cornerRadius = 7
+            button?.borderWidth = 2
+            button?.borderColor = UIColor.black
+        }
+    }
+    
+    func logoutUser() {
+        
     }
 
 }
-
