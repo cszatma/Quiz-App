@@ -147,15 +147,47 @@ SWIFT_CLASS("_TtC14CSKitUniversal8CSButton")
 @interface CSButton : UIButton
 @property (nonatomic) CGFloat borderWidth;
 @property (nonatomic, strong) UIColor * _Nullable borderColor;
-@property (nonatomic) CGFloat cornerRadius;
+@property (nonatomic, copy) NSString * _Nullable text;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@interface UIColor (SWIFT_EXTENSION(CSKitUniversal))
+/// Initializes and returns a color object using the specified opacity and RGB component values.
+/// <ul>
+///   <li>
+///     parameters:
+///   </li>
+///   <li>
+///     r: The red value of the color object on a scale from 0 to 255.
+///   </li>
+///   <li>
+///     g: The green value of the color object on a scale from 0 to 255.
+///   </li>
+///   <li>
+///     b: The blue value of the color object on a scale from 0 to 255.
+///   </li>
+///   <li>
+///     a: The opacity value of the color object on a scale from 0 to 100.
+///   </li>
+/// </ul>
+- (nonnull instancetype)initWithR:(CGFloat)r g:(CGFloat)g b:(CGFloat)b a:(CGFloat)a;
 @end
 
 
 @interface UITableViewController (SWIFT_EXTENSION(CSKitUniversal))
 /// Automatically calls the dismiss method for the given UITableViewController.
 - (void)back;
+@end
+
+
+@interface UIView (SWIFT_EXTENSION(CSKitUniversal))
+/// Returns an instance of a UIView with translatesAutoresizingMaskIntoConstraints set to specified value.
+- (nonnull instancetype)initWithAutoresizingToConstraints:(BOOL)autoresizingToConstraints;
+@property (nonatomic) CGFloat cornerRadius;
+/// Sets the width and color of the layer’s border.
+- (void)setBorderWithWidth:(CGFloat)width color:(UIColor * _Nonnull)color;
 @end
 
 
