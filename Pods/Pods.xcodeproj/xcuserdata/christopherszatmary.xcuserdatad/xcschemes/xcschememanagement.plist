@@ -29,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TinyConstraints.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -42,12 +47,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1B1CAA14CDE14A960F0DC738FBE2664D</key>
+		<key>3057B650D25B99AB8876EFB7E41F8DFB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3057B650D25B99AB8876EFB7E41F8DFB</key>
+		<key>6BC39D433F968CF6642211D472BBE71B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>70D362F48B7E16D17D38F7E72D2EFD07</key>
 		<dict>
 			<key>primary</key>
 			<true/>
