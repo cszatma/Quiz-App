@@ -12,10 +12,6 @@ import Firebase
 
 class MenuViewController: UIViewController {
     
-    @IBOutlet weak var questionButton: CSButton!
-    @IBOutlet weak var statsButton: CSButton!
-    @IBOutlet weak var settingsButton: CSButton!
-    
     var questions: [Question]!
     
     
@@ -26,23 +22,23 @@ class MenuViewController: UIViewController {
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logoutUser))
         view.backgroundColor = UIColor.white
-        //setUpButtons()
+        
+        //User isn't logged in
+        if FIRAuth.auth()?.currentUser?.uid == nil {
+            perform(#selector(logoutUser), with: nil, afterDelay: 0)
+        }
+        
     }
     
-    func setUpButtons() {
-        let buttons = [questionButton, statsButton, settingsButton]
-        for button in buttons {
-            button?.cornerRadius = 7
-            button?.borderWidth = 2
-            button?.borderColor = UIColor.black
-        }
-    }
     
     func logoutUser() {
+        do {
+            try FIRAuth.auth()?.signOut()
+        } catch let error {
+            print(error)
+        }
         let loginViewController = LoginViewController()
         present(loginViewController, animated: true, completion: nil)
-//        let identifier = "showLogin"
-//        performSegue(withIdentifier: identifier, sender: nil)
     }
 
 }

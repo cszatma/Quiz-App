@@ -25,7 +25,7 @@ class LoginViewController: UIViewController {
         let button = CSButton(autoresizingToConstraints: false)
         button.setBackgroundImage(#imageLiteral(resourceName: "SignUpButton"), for: .normal)
         button.cornerRadius = 5
-        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleLoginRegisterButtonPress), for: .touchUpInside)
         return button
     }()
     
@@ -67,7 +67,21 @@ class LoginViewController: UIViewController {
         return imageView
     }()
     
+    let loginRegisterSegmentedControl: UISegmentedControl = {
+        let segmentedControl = UISegmentedControl(items: ["Login", "Register"])
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.tintColor = UIColor.white
+        segmentedControl.selectedSegmentIndex = 1
+        segmentedControl.addTarget(self, action: #selector(handleLoginRegisterChanged), for: .valueChanged)
+        return segmentedControl
+    }()
+    
     //*** End Views ***//
+    
+    var inputsViewHeight: Constraint?
+    var nameTextFieldHeight: Constraint?
+    var emailTextFieldHeight: Constraint?
+    var passwordTextFieldHeight: Constraint?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,16 +90,18 @@ class LoginViewController: UIViewController {
         
         view.addSubview(inputsView)
         view.addSubview(loginRegisterButton)
+        view.addSubview(loginRegisterSegmentedControl)
         view.addSubview(logoImageView)
         
         setupView()
     }
     
+    ///Sets up all the views.
     func setupView() {
         //Create inputsView Constraints
         inputsView.center(in: view)
         inputsView.width(to: view, offset: -24)
-        inputsView.height(120)
+        inputsViewHeight = inputsView.height(150)
         
         //Create loginRegisterButton Constraints
         loginRegisterButton.centerX(to: view)
@@ -95,22 +111,31 @@ class LoginViewController: UIViewController {
         //loginRegisterButton.width(to: inputsView)
         //loginRegisterButton.height(30)
         
+        //Create loginRegisterSegmentedControl Constraints
+        loginRegisterSegmentedControl.centerX(to: view)
+        loginRegisterSegmentedControl.bottomToTop(of: inputsView, offset: -12)
+        loginRegisterSegmentedControl.width(to: inputsView)
+        loginRegisterSegmentedControl.height(36)
+        
         //Create logoImageView Constraints
         logoImageView.centerX(to: view)
-        logoImageView.bottomToTop(of: inputsView, offset: -12)
+        logoImageView.bottomToTop(of: loginRegisterSegmentedControl, offset: -12)
         logoImageView.width(150)
         logoImageView.height(150)
         
         setupInputsView()
+        
+        
     }
     
+    ///Sets up all the textfields inside the inputsView.
     func setupInputsView() {
         //Create nameTextField Constraints
         inputsView.addSubview(nameTextField)
         nameTextField.left(to: inputsView, offset: 12)
         nameTextField.top(to: inputsView)
         nameTextField.width(to: inputsView)
-        nameTextField.heightWithMultiplier(to: inputsView, multiplier: 1/3)
+        nameTextFieldHeight = nameTextField.heightWithMultiplier(to: inputsView, multiplier: 1/3)
         
         //Add nameSeparator
         inputsView.addSubview(nameSeparator)
@@ -124,7 +149,7 @@ class LoginViewController: UIViewController {
         emailTextField.left(to: inputsView, offset: 12)
         emailTextField.topToBottom(of: nameSeparator)
         emailTextField.width(to: inputsView)
-        emailTextField.height(to: nameTextField)
+        emailTextFieldHeight = emailTextField.heightWithMultiplier(to: inputsView, multiplier: 1/3)
         
         //Add emailSeparator
         inputsView.addSubview(emailSeparator)
@@ -138,23 +163,41 @@ class LoginViewController: UIViewController {
         passwordTextField.left(to: inputsView, offset: 12)
         passwordTextField.topToBottom(of: emailSeparator)
         passwordTextField.width(to: inputsView)
-        passwordTextField.height(to: nameTextField)
+        passwordTextFieldHeight = passwordTextField.heightWithMultiplier(to: inputsView, multiplier: 1/3)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    func handleRegister() {
-        guard let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
+    func handleLoginRegisterButtonPress() {
+        guard let email = emailTextField.text, let password = passwordTextField.text else {
             return
         }
         
-        guard name != "" || email != "" || password != "" else {
+        //Make sure user entered and email and password.
+        guard email != "" && password != "" else {
+            return
+        }
+        if loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
+            logInUser(withEmail: email, password: password)
+        } else {
+            registerUser(withEmail: email, password: password)
+        }
+    }
+    
+    ///Executed when the loginRegisterButton is pressed.
+    func registerUser(withEmail: String, password: String) {
+        guard let name = nameTextField.text else {
             return
         }
         
-        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { authUser, error in
+        //Make sure user entered a name
+        guard name != "" else {
+            return
+        }
+        
+        FIRAuth.auth()?.createUser(withEmail: withEmail, password: password, completion: { authUser, error in
             if error.hasValue {
                 self.displayErrorMessage(errorTitle: "Error", errorMessage: error!.localizedDescription, buttonTitle: "Ok")
                 return
@@ -165,7 +208,7 @@ class LoginViewController: UIViewController {
             }
             
             let reference = FIRDatabase.database().reference(withPath: "users")
-            let user = User(name: name, email: email, score: 0, questionsAnswered: 0)
+            let user = User(name: name, email: withEmail, score: 0, questionsAnswered: 0)
             let userRef = reference.child(id)
             userRef.setValue(user.toJSON(), withCompletionBlock: { err, ref in
                 if err.hasValue {
@@ -173,9 +216,39 @@ class LoginViewController: UIViewController {
                     return
                 }
                 
-                print("Saved user to database")
+                //Successfully registered and logged in.
+                self.dismiss(animated: true, completion: nil)
             })
         })
+    }
+    
+    func logInUser(withEmail: String, password: String) {
+        FIRAuth.auth()?.signIn(withEmail: withEmail, password: password, completion: { user, error in
+            if error.hasValue {
+                self.displayErrorMessage(errorTitle: "Error", errorMessage: error!.localizedDescription, buttonTitle: "Ok")
+                return
+            }
+            
+            //Successfully logged in.
+            self.dismiss(animated: true, completion: nil)
+        })
+    }
+    
+    ///Executed when the value of the loginRegisterSegmentedControl is changed.
+    func handleLoginRegisterChanged() {
+        let selected = loginRegisterSegmentedControl.selectedSegmentIndex
+        let image = selected == 0 ? #imageLiteral(resourceName: "SignInButton") : #imageLiteral(resourceName: "SignUpButton")
+        loginRegisterButton.setBackgroundImage(image, for: .normal)
+        
+        //Adjust inputsView
+        inputsViewHeight?.constant = selected == 0 ? 100 : 150
+        
+        //Change textfield heights
+        updateConstraint(&nameTextFieldHeight!, to: nameTextField.heightWithMultiplier(to: inputsView, multiplier: selected == 0 ? 0 : 1/3, isActive: false))
+        nameTextField.isHidden = selected == 0
+        updateConstraint(&emailTextFieldHeight!, to: emailTextField.heightWithMultiplier(to: inputsView, multiplier: selected == 0 ? 1/2 : 1/3, isActive: false))
+        updateConstraint(&passwordTextFieldHeight!, to: passwordTextField.heightWithMultiplier(to: inputsView, multiplier: selected == 0 ? 1/2 : 1/3, isActive: false))
+        
     }
     
 }
