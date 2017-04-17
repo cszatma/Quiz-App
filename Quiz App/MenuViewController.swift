@@ -8,6 +8,7 @@
 
 //Special Version of CSKit that runs on iPhone and Simulator (built for both architectures)
 import CSKitUniversal
+import Firebase
 
 class MenuViewController: UIViewController {
     
@@ -20,8 +21,12 @@ class MenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //let ref = FIRDatabase.database().reference(fromURL: "https://quiz-app-ccea2.firebaseio.com/")
+        
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logoutUser))
-        setUpButtons()
+        view.backgroundColor = UIColor.white
+        //setUpButtons()
     }
     
     func setUpButtons() {
@@ -34,7 +39,10 @@ class MenuViewController: UIViewController {
     }
     
     func logoutUser() {
-        
+        let loginViewController = LoginViewController()
+        present(loginViewController, animated: true, completion: nil)
+//        let identifier = "showLogin"
+//        performSegue(withIdentifier: identifier, sender: nil)
     }
 
 }
