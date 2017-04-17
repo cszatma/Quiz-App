@@ -12,12 +12,12 @@ import TinyConstraints
 
 extension Constrainable {
     @discardableResult
-    public func widthWithMultiplier(to view: UIView, _ dimension: NSLayoutDimension? = nil, offset: CGFloat = 0, multiplier: CGFloat = 0, priority: ConstraintPriority = .required, isActive: Bool = true) -> Constraint {
+    public func widthWithMultiplier(to view: UIView, _ dimension: NSLayoutDimension? = nil, offset: CGFloat = 0, multiplier: CGFloat = 1, priority: ConstraintPriority = .required, isActive: Bool = true) -> Constraint {
         var constraint: Constraint
 
-        if offset != 0 && multiplier != 0 {
+        if offset != 0 && multiplier != 1 {
             constraint = widthAnchor.constraint(equalTo: dimension ?? view.widthAnchor, multiplier: multiplier, constant: offset).with(priority)
-        } else if multiplier != 0 {
+        } else if multiplier != 1 {
             constraint = widthAnchor.constraint(equalTo: dimension ?? view.widthAnchor, multiplier: multiplier).with(priority)
         } else {
             constraint = widthAnchor.constraint(equalTo: dimension ?? view.widthAnchor, constant: offset).with(priority)
@@ -27,12 +27,12 @@ extension Constrainable {
     }
     
     @discardableResult
-    public func heightWithMultiplier(to view: UIView, _ dimension: NSLayoutDimension? = nil, offset: CGFloat = 0, multiplier: CGFloat = 0, priority: ConstraintPriority = .required, isActive: Bool = true) -> Constraint {
+    public func heightWithMultiplier(to view: UIView, _ dimension: NSLayoutDimension? = nil, offset: CGFloat = 0, multiplier: CGFloat = 1, priority: ConstraintPriority = .required, isActive: Bool = true) -> Constraint {
        var constraint: Constraint
 
-        if offset != 0 && multiplier != 0 {
+        if offset != 0 && multiplier != 1 {
             constraint = heightAnchor.constraint(equalTo: dimension ?? view.heightAnchor, multiplier: multiplier, constant: offset).with(priority)
-        } else if multiplier != 0 {
+        } else if multiplier != 1 {
             constraint = heightAnchor.constraint(equalTo: dimension ?? view.heightAnchor, multiplier: multiplier).with(priority)
         } else {
             constraint = heightAnchor.constraint(equalTo: dimension ?? view.heightAnchor, constant: offset).with(priority)
@@ -40,4 +40,12 @@ extension Constrainable {
         constraint.isActive = isActive
         return constraint
     }
+    
+}
+
+///Sets the given constraint to the value of newConstraint. Make sure newConstraint's isActive property is set to false in order for this function to work properly.
+public func updateConstraint(_ constraint: inout Constraint, to newConstraint: Constraint) {
+    constraint.isActive = false
+    constraint = newConstraint
+    constraint.isActive = true
 }
