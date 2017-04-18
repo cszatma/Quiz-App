@@ -10,7 +10,7 @@ import CSKitUniversal
 import TinyConstraints
 import Firebase
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //*** Views ***//
     let inputsView: View =  {
@@ -94,6 +94,10 @@ class LoginViewController: UIViewController {
         view.addSubview(logoImageView)
         
         setupView()
+        nameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        self.hideKeyboardWhenTappedAround()
     }
     
     ///Sets up all the views.
@@ -161,7 +165,8 @@ class LoginViewController: UIViewController {
         //Create passwordTextField Constraints
         inputsView.addSubview(passwordTextField)
         passwordTextField.left(to: inputsView, offset: 12)
-        passwordTextField.topToBottom(of: emailSeparator)
+        //passwordTextField.topToBottom(of: emailSeparator)
+        passwordTextField.bottom(to: inputsView)
         passwordTextField.width(to: inputsView)
         passwordTextFieldHeight = passwordTextField.heightWithMultiplier(to: inputsView, multiplier: 1/3)
     }
@@ -249,6 +254,17 @@ class LoginViewController: UIViewController {
         updateConstraint(&emailTextFieldHeight!, to: emailTextField.heightWithMultiplier(to: inputsView, multiplier: selected == 0 ? 1/2 : 1/3, isActive: false))
         updateConstraint(&passwordTextFieldHeight!, to: passwordTextField.heightWithMultiplier(to: inputsView, multiplier: selected == 0 ? 1/2 : 1/3, isActive: false))
         
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == nameTextField {
+            emailTextField.becomeFirstResponder()
+        } else if textField == emailTextField {
+            passwordTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return true
     }
     
 }
