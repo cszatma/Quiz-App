@@ -152,6 +152,26 @@ SWIFT_CLASS("_TtC14CSKitUniversal8CSButton")
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class UITextField;
+
+SWIFT_CLASS("_TtC14CSKitUniversal24CSTextFieldContainerView")
+@interface CSTextFieldContainerView : UIView
+@property (nonatomic, readonly, copy) NSArray<UITextField *> * _Nullable textFields;
+@property (nonatomic, readonly) NSInteger numberOfTextFields;
+- (nonnull instancetype)initWithNumberOfTextFields:(NSInteger)numberOfTextFields withTitles:(NSArray<NSString *> * _Nonnull)withTitles frame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class UIViewController;
+
+SWIFT_CLASS("_TtC14CSKitUniversal8CSWindow")
+@interface CSWindow : UIWindow
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithViewController:(UIViewController * _Nonnull)viewController;
+@end
+
 
 @interface UIColor (SWIFT_EXTENSION(CSKitUniversal))
 /// Initializes and returns a color object using the specified opacity and RGB component values.

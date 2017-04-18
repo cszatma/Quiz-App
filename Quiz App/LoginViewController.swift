@@ -82,7 +82,7 @@ class LoginViewController: UIViewController {
     var nameTextFieldHeight: Constraint?
     var emailTextFieldHeight: Constraint?
     var passwordTextFieldHeight: Constraint?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
