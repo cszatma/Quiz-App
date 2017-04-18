@@ -10,6 +10,8 @@
 		64CCA983E78CFD3E74DAB087 /* Pods_Quiz_AppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D196E7BB934A2C1FE7EAD7 /* Pods_Quiz_AppUITests.framework */; };
 		80A7EF7DC084754955EC198B /* Pods_Quiz_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA480B80190435CEC4A5F63D /* Pods_Quiz_App.framework */; };
 		C11634E482EB010FF0998800 /* Pods_Quiz_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E779DC471E8C8D539EE1BCD2 /* Pods_Quiz_AppTests.framework */; };
+		E391A8831EA5AACF00680EE1 /* CSKitUniversal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E391A8821EA5AACF00680EE1 /* CSKitUniversal.framework */; };
+		E391A8841EA5AACF00680EE1 /* CSKitUniversal.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E391A8821EA5AACF00680EE1 /* CSKitUniversal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E3C2D3081EA1867E00CFDDCF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3C2D3071EA1867E00CFDDCF /* GoogleService-Info.plist */; };
 		E3C2D30A1EA19C2C00CFDDCF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C2D3091EA19C2C00CFDDCF /* LoginViewController.swift */; };
 		E3D36D0E1E986A1C00F673F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D36D0D1E986A1C00F673F1 /* AppDelegate.swift */; };
@@ -21,8 +23,6 @@
 		E3D36D2E1E986A1D00F673F1 /* Quiz_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D36D2D1E986A1D00F673F1 /* Quiz_AppUITests.swift */; };
 		E3D36D3C1E986A9100F673F1 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D36D3B1E986A9100F673F1 /* Question.swift */; };
 		E3FD33461EA43AD2006D8AE6 /* TinyConstraintsAddition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FD33451EA43AD2006D8AE6 /* TinyConstraintsAddition.swift */; };
-		E3FD334E1EA45E61006D8AE6 /* CSKitUniversal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3FD334D1EA45E61006D8AE6 /* CSKitUniversal.framework */; };
-		E3FD334F1EA45E61006D8AE6 /* CSKitUniversal.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E3FD334D1EA45E61006D8AE6 /* CSKitUniversal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E3FD33511EA4717E006D8AE6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FD33501EA4717E006D8AE6 /* User.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +50,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E3FD334F1EA45E61006D8AE6 /* CSKitUniversal.framework in Embed Frameworks */,
+				E391A8841EA5AACF00680EE1 /* CSKitUniversal.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,6 +65,7 @@
 		C87D1842B480515672083E86 /* Pods-Quiz App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quiz App.release.xcconfig"; path = "Pods/Target Support Files/Pods-Quiz App/Pods-Quiz App.release.xcconfig"; sourceTree = "<group>"; };
 		D0A27919885634102616E2F1 /* Pods-Quiz AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quiz AppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Quiz AppTests/Pods-Quiz AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		DA480B80190435CEC4A5F63D /* Pods_Quiz_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quiz_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E391A8821EA5AACF00680EE1 /* CSKitUniversal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CSKitUniversal.framework; sourceTree = "<group>"; };
 		E3C2D3071EA1867E00CFDDCF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E3C2D3091EA19C2C00CFDDCF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E3D36D0A1E986A1C00F673F1 /* Quiz App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quiz App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,7 +83,6 @@
 		E3D36D2F1E986A1D00F673F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E3D36D3B1E986A9100F673F1 /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		E3FD33451EA43AD2006D8AE6 /* TinyConstraintsAddition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TinyConstraintsAddition.swift; sourceTree = "<group>"; };
-		E3FD334D1EA45E61006D8AE6 /* CSKitUniversal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CSKitUniversal.framework; sourceTree = "<group>"; };
 		E3FD33501EA4717E006D8AE6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E779DC471E8C8D539EE1BCD2 /* Pods_Quiz_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quiz_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F66DE28816CD660B1FA7E556 /* Pods-Quiz App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quiz App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Quiz App/Pods-Quiz App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80A7EF7DC084754955EC198B /* Pods_Quiz_App.framework in Frameworks */,
-				E3FD334E1EA45E61006D8AE6 /* CSKitUniversal.framework in Frameworks */,
+				E391A8831EA5AACF00680EE1 /* CSKitUniversal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,7 +161,7 @@
 		E3D36D011E986A1C00F673F1 = {
 			isa = PBXGroup;
 			children = (
-				E3FD334D1EA45E61006D8AE6 /* CSKitUniversal.framework */,
+				E391A8821EA5AACF00680EE1 /* CSKitUniversal.framework */,
 				E3D36D0C1E986A1C00F673F1 /* Quiz App */,
 				E3D36D211E986A1C00F673F1 /* Quiz AppTests */,
 				E3D36D2C1E986A1D00F673F1 /* Quiz AppUITests */,
