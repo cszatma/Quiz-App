@@ -35,11 +35,11 @@ struct User {
         uid = snapshot.key
     }
     
-//    init(authUser: FIRUser) {
-//        self.email = authUser.email!
-//    }
-    
     func toJSON() -> Any {
         return ["name": name, "email": email, "score": score, "questionsAnswered": questionsAnswered]
+    }
+    
+    var description: String {
+        return "User: {\(name), \(email), \(score), \(questionsAnswered)}"
     }
 }

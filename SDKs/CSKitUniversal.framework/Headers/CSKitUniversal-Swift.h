@@ -158,9 +158,19 @@ SWIFT_CLASS("_TtC14CSKitUniversal24CSTextFieldContainerView")
 @interface CSTextFieldContainerView : UIView
 @property (nonatomic, readonly, copy) NSArray<UITextField *> * _Nullable textFields;
 @property (nonatomic, readonly) NSInteger numberOfTextFields;
+/// A Boolean value that determines whether the font size of each TextField should be adjusted to maintain a ratio with the size of the view. This property is true by default.
+/// Setting it to false will always keep the font at the defaultFontSize.
+@property (nonatomic) BOOL shouldAdjustFontSizeToContainer;
+/// A Boolean value that determines whether the font size of each TextField should be adjusted when one of the TextFields is hidden. This property is true by default.
+/// Setting this property to false will keep the font at
+@property (nonatomic) BOOL shouldResizeFontWhenHidden;
+@property (nonatomic) CGFloat defaultFontSize;
 - (nonnull instancetype)initWithNumberOfTextFields:(NSInteger)numberOfTextFields withTitles:(NSArray<NSString *> * _Nonnull)withTitles frame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (void)layoutSubviews;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+- (void)toggleTextFieldVisibilityWithIndex:(NSInteger)index isHidden:(BOOL)isHidden;
+- (void)setFontSize:(CGFloat)size;
 @end
 
 @class UIViewController;
