@@ -23,13 +23,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return view
     }()
     
-    let loginRegisterButton: CSButton = {
-        let button = CSButton(autoresizingToConstraints: false)
-        button.setBackgroundImage(#imageLiteral(resourceName: "SignUpButton"), for: .normal)
-        button.cornerRadius = 5
-        button.addTarget(self, action: #selector(handleLoginRegisterButtonPress), for: .touchUpInside)
-        return button
-    }()
+    let loginRegisterButton = QAButton(image: #imageLiteral(resourceName: "SignInButton"), target: #selector(handleLoginRegisterButtonTouch))
     
     let logoImageView: UIImageView = {
         let imageView = UIImageView(autoresizingToConstraints: false)
@@ -53,15 +47,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = .lightGray
         
-        view.addSubview(inputsView)
-        view.addSubview(loginRegisterButton)
-        view.addSubview(loginRegisterSegmentedControl)
-        view.addSubview(logoImageView)
-        
+        //Setup all the views and constraints
         setupView()
+        
         inputsView.textFields?[2].isSecureTextEntry = true
+        //Set delegates for each textfield.
         for textField in inputsView.textFields! {
             textField.delegate = self
         }
@@ -74,44 +66,49 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     ///Sets up all the views.
     func setupView() {
-        print("Height: \(view.frame.height)")
+        //Add all subviews
+        view.addSubview(inputsView)
+        view.addSubview(loginRegisterButton)
+        view.addSubview(loginRegisterSegmentedControl)
+        view.addSubview(logoImageView)
+        
         //Create inputsView Constraints
         inputsView.center(in: view)
         inputsView.width(to: view, offset: -24)
-        inputsViewHeight = inputsView.height(view.frame.height/6.67)
-        //inputsViewHeight = inputsView.height(100)
+        inputsViewHeight = inputsView.height(view.height/6.67)
+//      inputsViewHeight = inputsView.height(100)
         
         //Create loginRegisterButton Constraints
         loginRegisterButton.centerX(to: view)
         loginRegisterButton.topToBottom(of: inputsView, offset: 12)
         loginRegisterButton.widthWithMultiplier(to: inputsView, multiplier: 1/2)
-        //loginRegisterButton.height(60)
+//      loginRegisterButton.height(60)
         loginRegisterButton.heightWithMultiplier(to: view, multiplier: 0.089955)
         
-        //loginRegisterButton.width(to: inputsView)
-        //loginRegisterButton.height(30)
+//      loginRegisterButton.width(to: inputsView)
+//      loginRegisterButton.height(30)
         
         //Create loginRegisterSegmentedControl Constraints
         loginRegisterSegmentedControl.centerX(to: view)
         loginRegisterSegmentedControl.bottomToTop(of: inputsView, offset: -12)
         loginRegisterSegmentedControl.width(to: inputsView)
-        loginRegisterSegmentedControl.height(view.frame.height/18.52778)
-        //loginRegisterSegmentedControl.height(36)
+        loginRegisterSegmentedControl.height(view.height/18.52778)
+//      loginRegisterSegmentedControl.height(36)
         
         //Create logoImageView Constraints
         logoImageView.centerX(to: view)
         logoImageView.bottomToTop(of: loginRegisterSegmentedControl, offset: -12)
-        let side = view.frame.height/4.446667
+        let side = view.height/4.446667
         logoImageView.size(CGSize(width: side, height: side))
-        //logoImageView.width(150)
-        //logoImageView.height(150)
+//      logoImageView.width(150)
+//      logoImageView.height(150)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    func handleLoginRegisterButtonPress() {
+    func handleLoginRegisterButtonTouch() {
         guard let email = inputsView.textFields?[1].text, let password = inputsView.textFields?[2].text else {
             return
         }
@@ -127,7 +124,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    ///Executed when the loginRegisterButton is pressed.
+    ///Called when the user tries to sign up.
     func registerUser(withEmail: String, password: String) {
         guard let name = inputsView.textFields?[0].text else {
             return
@@ -138,6 +135,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        //Create user
         FIRAuth.auth()?.createUser(withEmail: withEmail, password: password, completion: { authUser, error in
             if error.hasValue {
                 self.displayErrorMessage(errorTitle: "Error", errorMessage: error!.localizedDescription, buttonTitle: "Ok")
@@ -148,6 +146,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 return
             }
             
+            //Create user object and save it to the database
             let reference = FIRDatabase.database().reference(withPath: "users")
             let user = User(name: name, email: withEmail, score: 0, questionsAnswered: 0)
             let userRef = reference.child(id)
@@ -163,6 +162,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         })
     }
     
+    ///Called when user tries to sign in.
     func logInUser(withEmail: String, password: String) {
         FIRAuth.auth()?.signIn(withEmail: withEmail, password: password, completion: { user, error in
             if error.hasValue {
@@ -184,8 +184,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         inputsView.toggleTextFieldVisibility(index: 0, isHidden: selected == 0)
         
         //Adjust inputsView
-        //inputsViewHeight?.constant = selected == 0 ? 100 : 150
-        inputsViewHeight?.constant = selected == 0 ? view.frame.height/6.67 : view.frame.height/4.446667
+//      inputsViewHeight?.constant = selected == 0 ? 100 : 150
+        inputsViewHeight?.constant = selected == 0 ? view.height/6.67 : view.height/4.446667
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
