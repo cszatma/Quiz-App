@@ -38,3 +38,5 @@ struct Question: CustomStringConvertible {
     }
     
 }
+
+let questionsRef = FIRDatabase.database().reference().child("question-objects")

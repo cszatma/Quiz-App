@@ -11,8 +11,8 @@ import Firebase
 struct User {
     let name: String
     let email: String
-    let score: Int
-    let questionsAnswered: Int
+    var score: Int
+    var questionsAnswered: Int
     let ref: FIRDatabaseReference?
     let uid: String?
     
@@ -39,7 +39,17 @@ struct User {
         return ["name": name, "email": email, "score": score, "questionsAnswered": questionsAnswered]
     }
     
+    mutating func incrementStats(shouldIncrementScore: Bool) {
+        if shouldIncrementScore {
+            score += 1
+        }
+        questionsAnswered += 1
+        ref?.setValue(toJSON())
+    }
+    
     var description: String {
         return "User: {\(name), \(email), \(score), \(questionsAnswered)}"
     }
 }
+
+let usersRef = FIRDatabase.database().reference().child("users")
