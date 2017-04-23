@@ -143,20 +143,20 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class UIColor;
 @class NSCoder;
 
-SWIFT_CLASS("_TtC14CSKitUniversal8CSButton")
+SWIFT_CLASS("_TtC5CSKit8CSButton")
 @interface CSButton : UIButton
 @property (nonatomic) CGFloat borderWidth;
 @property (nonatomic, strong) UIColor * _Nullable borderColor;
 @property (nonatomic) UIViewContentMode imageContentMode;
 @property (nonatomic, copy) NSString * _Nullable text;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 @end
 
 @class UITextField;
 
-SWIFT_CLASS("_TtC14CSKitUniversal24CSTextFieldContainerView")
+SWIFT_CLASS("_TtC5CSKit24CSTextFieldContainerView")
 @interface CSTextFieldContainerView : UIView
 @property (nonatomic, readonly, copy) NSArray<UITextField *> * _Nullable textFields;
 @property (nonatomic, readonly) NSInteger numberOfTextFields;
@@ -177,7 +177,7 @@ SWIFT_CLASS("_TtC14CSKitUniversal24CSTextFieldContainerView")
 
 @class UIViewController;
 
-SWIFT_CLASS("_TtC14CSKitUniversal8CSWindow")
+SWIFT_CLASS("_TtC5CSKit8CSWindow")
 @interface CSWindow : UIWindow
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
@@ -185,38 +185,28 @@ SWIFT_CLASS("_TtC14CSKitUniversal8CSWindow")
 @end
 
 
-@interface UIColor (SWIFT_EXTENSION(CSKitUniversal))
+@interface UIColor (SWIFT_EXTENSION(CSKit))
 /// Initializes and returns a color object using the specified opacity and RGB component values.
-/// <ul>
-///   <li>
-///     parameters:
-///   </li>
-///   <li>
-///     r: The red value of the color object on a scale from 0 to 255.
-///   </li>
-///   <li>
-///     g: The green value of the color object on a scale from 0 to 255.
-///   </li>
-///   <li>
-///     b: The blue value of the color object on a scale from 0 to 255.
-///   </li>
-///   <li>
-///     a: The opacity value of the color object on a scale from 0 to 100.
-///   </li>
-/// </ul>
+/// \param r The red value of the color object on a scale from 0 to 255.
+///
+/// \param g The green value of the color object on a scale from 0 to 255.
+///
+/// \param b The blue value of the color object on a scale from 0 to 255.
+///
+/// \param a The opacity value of the color object on a scale from 0 to 100.
+///
 - (nonnull instancetype)initWithR:(CGFloat)r g:(CGFloat)g b:(CGFloat)b a:(CGFloat)a;
+- (nonnull instancetype)initWithHex:(NSInteger)hex;
 @end
 
 
-@interface UITableViewController (SWIFT_EXTENSION(CSKitUniversal))
+@interface UITableViewController (SWIFT_EXTENSION(CSKit))
 /// Automatically calls the dismiss method for the given UITableViewController.
 - (void)back;
 @end
 
 
-@interface UIView (SWIFT_EXTENSION(CSKitUniversal))
-/// Returns an instance of a UIView with translatesAutoresizingMaskIntoConstraints set to specified value.
-- (nonnull instancetype)initWithAutoresizingToConstraints:(BOOL)autoresizingToConstraints;
+@interface UIView (SWIFT_EXTENSION(CSKit))
 @property (nonatomic) CGFloat cornerRadius;
 /// Sets the width and color of the layer’s border.
 - (void)setBorderWithWidth:(CGFloat)width color:(UIColor * _Nonnull)color;
@@ -225,7 +215,7 @@ SWIFT_CLASS("_TtC14CSKitUniversal8CSWindow")
 @end
 
 
-@interface UIViewController (SWIFT_EXTENSION(CSKitUniversal))
+@interface UIViewController (SWIFT_EXTENSION(CSKit))
 /// Used to dismiss the keyboard when the user taps the screen.
 - (void)hideKeyboardWhenTappedAround;
 /// Automatically dismisses an active keyboard.
@@ -241,7 +231,7 @@ SWIFT_CLASS("_TtC14CSKitUniversal8CSWindow")
 @end
 
 
-SWIFT_CLASS("_TtC14CSKitUniversal8Vector3D")
+SWIFT_CLASS("_TtC5CSKit8Vector3D")
 @interface Vector3D : NSObject <NSCoding>
 /// The x component of the given vector.
 @property (nonatomic) double x;
