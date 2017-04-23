@@ -8,6 +8,9 @@
 
 import Firebase
 
+typealias Questions = [Question]
+typealias QuestionJSON = [String: Any]
+
 struct Question: CustomStringConvertible {
     
     let question: String
@@ -33,6 +36,10 @@ struct Question: CustomStringConvertible {
         ref = snapshot.ref
     }
     
+    init(json: QuestionJSON) {
+        self.init(question: json["question"] as! String, answer: json["answer"] as! String, choices: json["choices"] as! [String])
+    }
+    
     var description: String {
         return "{Question: \(question), Answer: \(answer), Choices: \(choices)}"
     }
@@ -40,3 +47,4 @@ struct Question: CustomStringConvertible {
 }
 
 let questionsRef = FIRDatabase.database().reference().child("question-objects")
+let defaultQuestionSet = ["question 1", "question 2", "question 3", "question 4", "question 5", "question 6", "question 7", "question 8", "question 9", "question 10"]
