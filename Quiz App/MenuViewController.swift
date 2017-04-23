@@ -6,10 +6,11 @@
 //  Copyright © 2017 Christopher Szatmary. All rights reserved.
 //
 
-//Special Version of CSKit that runs on iPhone and Simulator (built for both architectures)
-import CSKitUniversal
+import CSKit
 import TinyConstraints
 import Firebase
+
+typealias FIRObserverHandle = UInt
 
 class MenuViewController: UIViewController {
     
@@ -22,10 +23,12 @@ class MenuViewController: UIViewController {
     ///User currently logged in.
     var user: User?
     ///Handle of FIRDatabase observer.
-    private var observer: UInt?
+    private var userObserver: FIRObserverHandle?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.backBarButtonItem = UIBarButtonItem()
+        navigationItem.backBarButtonItem?.title = "Menu"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logoutUser))
         view.backgroundColor = .white
         setupView()
@@ -37,16 +40,18 @@ class MenuViewController: UIViewController {
         view.addSubview(settingsButton)
         
         statsButton.center(in: view)
-        statsButton.widthWithMultiplier(to: view, multiplier: 1/2)
-        statsButton.heightWithMultiplier(to: view, multiplier: 0.089955)
+        statsButton.width(to: view, multiplier: 1/2)
+        statsButton.height(to: statsButton, statsButton.widthAnchor, multiplier: (40/149)) //40/139
+        //statsButton.height(to: view, multiplier: 0.089955)
         
         questionsButton.centerX(to: view)
-        questionsButton.bottomToTop(of: statsButton, offset: -view.height/5)
+        questionsButton.bottomToTop(of: statsButton, offset: -view.height/7)
+        //questionsButton.top(to: view, offset: navigationController!.navigationBar.height + 50)
         questionsButton.width(to: statsButton)
-        questionsButton.height(to: statsButton)
+        questionsButton.height(to: statsButton, multiplier: 1)
         
         settingsButton.centerX(to: view)
-        settingsButton.topToBottom(of: statsButton, offset: view.height/5)
+        settingsButton.topToBottom(of: statsButton, offset: view.height/7)
         settingsButton.width(to: statsButton)
         settingsButton.height(to: statsButton)
     }
@@ -62,8 +67,8 @@ class MenuViewController: UIViewController {
         } else {
             let uid = FIRAuth.auth()?.currentUser?.uid
             //Get current user
-            observer = usersRef.child(uid!).observe(.value, with: { snapshot in
-                self.user = User(snapshot: snapshot)
+            userObserver = usersRef.child(uid!).observe(.value, with: { userSnapshot in
+                self.user = User(snapshot: userSnapshot)
                 self.navigationItem.title = self.user?.name
             })
         }
@@ -77,7 +82,7 @@ class MenuViewController: UIViewController {
         }
         //Remove observer so it no longer tries to listen when a user signs out.
         if user.hasValue {
-            FIRDatabase.database().reference().child("users").child(user!.uid!).removeObserver(withHandle: observer!)
+            FIRDatabase.database().reference().child("users").child(user!.uid!).removeObserver(withHandle: userObserver!)
         }
         navigationItem.title = ""
         user = nil
@@ -88,7 +93,9 @@ class MenuViewController: UIViewController {
     
     func handleButtonTouch(_ sender: QAButton) {
         if sender == questionsButton {
-            
+            let viewController = QuestionViewController()
+            viewController.user = user
+            navigationController?.pushViewController(viewController, animated: true)
         } else if sender == statsButton {
             
         } else {

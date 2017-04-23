@@ -10,6 +10,9 @@
 		64CCA983E78CFD3E74DAB087 /* Pods_Quiz_AppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D196E7BB934A2C1FE7EAD7 /* Pods_Quiz_AppUITests.framework */; };
 		80A7EF7DC084754955EC198B /* Pods_Quiz_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA480B80190435CEC4A5F63D /* Pods_Quiz_App.framework */; };
 		C11634E482EB010FF0998800 /* Pods_Quiz_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E779DC471E8C8D539EE1BCD2 /* Pods_Quiz_AppTests.framework */; };
+		E30B3D4F1EA94D0700CBCE18 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30B3D4E1EA94D0700CBCE18 /* QuestionViewController.swift */; };
+		E345FD091EAD3D37008FAD34 /* CSKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E345FD081EAD3D37008FAD34 /* CSKit.framework */; };
+		E345FD0A1EAD3D37008FAD34 /* CSKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E345FD081EAD3D37008FAD34 /* CSKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E3C2D3081EA1867E00CFDDCF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3C2D3071EA1867E00CFDDCF /* GoogleService-Info.plist */; };
 		E3C2D30A1EA19C2C00CFDDCF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C2D3091EA19C2C00CFDDCF /* LoginViewController.swift */; };
 		E3D36D0E1E986A1C00F673F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D36D0D1E986A1C00F673F1 /* AppDelegate.swift */; };
@@ -21,8 +24,6 @@
 		E3D36D2E1E986A1D00F673F1 /* Quiz_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D36D2D1E986A1D00F673F1 /* Quiz_AppUITests.swift */; };
 		E3D36D3C1E986A9100F673F1 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D36D3B1E986A9100F673F1 /* Question.swift */; };
 		E3F8008B1EA82E970058F908 /* QAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F8008A1EA82E970058F908 /* QAButton.swift */; };
-		E3F800911EA8413E0058F908 /* CSKitUniversal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3F800901EA8413E0058F908 /* CSKitUniversal.framework */; };
-		E3F800921EA8413E0058F908 /* CSKitUniversal.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E3F800901EA8413E0058F908 /* CSKitUniversal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E3FD33511EA4717E006D8AE6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FD33501EA4717E006D8AE6 /* User.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +51,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E3F800921EA8413E0058F908 /* CSKitUniversal.framework in Embed Frameworks */,
+				E345FD0A1EAD3D37008FAD34 /* CSKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,6 +66,8 @@
 		C87D1842B480515672083E86 /* Pods-Quiz App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quiz App.release.xcconfig"; path = "Pods/Target Support Files/Pods-Quiz App/Pods-Quiz App.release.xcconfig"; sourceTree = "<group>"; };
 		D0A27919885634102616E2F1 /* Pods-Quiz AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quiz AppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Quiz AppTests/Pods-Quiz AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		DA480B80190435CEC4A5F63D /* Pods_Quiz_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quiz_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E30B3D4E1EA94D0700CBCE18 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		E345FD081EAD3D37008FAD34 /* CSKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CSKit.framework; path = SDKs/CSKit.framework; sourceTree = "<group>"; };
 		E3C2D3071EA1867E00CFDDCF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E3C2D3091EA19C2C00CFDDCF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E3D36D0A1E986A1C00F673F1 /* Quiz App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quiz App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,7 +85,6 @@
 		E3D36D2F1E986A1D00F673F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E3D36D3B1E986A9100F673F1 /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		E3F8008A1EA82E970058F908 /* QAButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QAButton.swift; sourceTree = "<group>"; };
-		E3F800901EA8413E0058F908 /* CSKitUniversal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CSKitUniversal.framework; path = SDKs/CSKitUniversal.framework; sourceTree = "<group>"; };
 		E3FD33501EA4717E006D8AE6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E779DC471E8C8D539EE1BCD2 /* Pods_Quiz_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quiz_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F66DE28816CD660B1FA7E556 /* Pods-Quiz App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quiz App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Quiz App/Pods-Quiz App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -94,7 +96,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80A7EF7DC084754955EC198B /* Pods_Quiz_App.framework in Frameworks */,
-				E3F800911EA8413E0058F908 /* CSKitUniversal.framework in Frameworks */,
+				E345FD091EAD3D37008FAD34 /* CSKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +147,7 @@
 			children = (
 				E3C2D3091EA19C2C00CFDDCF /* LoginViewController.swift */,
 				E3D36D0F1E986A1C00F673F1 /* MenuViewController.swift */,
+				E30B3D4E1EA94D0700CBCE18 /* QuestionViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -161,7 +164,7 @@
 		E3D36D011E986A1C00F673F1 = {
 			isa = PBXGroup;
 			children = (
-				E3F800901EA8413E0058F908 /* CSKitUniversal.framework */,
+				E345FD081EAD3D37008FAD34 /* CSKit.framework */,
 				E3D36D0C1E986A1C00F673F1 /* Quiz App */,
 				E3D36D211E986A1C00F673F1 /* Quiz AppTests */,
 				E3D36D2C1E986A1D00F673F1 /* Quiz AppUITests */,
@@ -379,7 +382,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		1089FDD0E6E1B360D644A340 /* [CP] Copy Pods Resources */ = {
@@ -409,7 +412,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		535A27C5093B6ECFD1114EE4 /* [CP] Embed Pods Frameworks */ = {
@@ -499,7 +502,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -511,6 +514,7 @@
 			files = (
 				E3D36D3C1E986A9100F673F1 /* Question.swift in Sources */,
 				E3D36D101E986A1C00F673F1 /* MenuViewController.swift in Sources */,
+				E30B3D4F1EA94D0700CBCE18 /* QuestionViewController.swift in Sources */,
 				E3FD33511EA4717E006D8AE6 /* User.swift in Sources */,
 				E3C2D30A1EA19C2C00CFDDCF /* LoginViewController.swift in Sources */,
 				E3D36D0E1E986A1C00F673F1 /* AppDelegate.swift in Sources */,

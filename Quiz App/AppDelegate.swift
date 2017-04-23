@@ -6,7 +6,7 @@
 //  Copyright © 2017 Christopher Szatmary. All rights reserved.
 //
 
-import CSKitUniversal
+import CSKit
 import Firebase
 
 @UIApplicationMain
@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = CSWindow(viewController: UINavigationController(rootViewController: MenuViewController()))
+        //window = CSWindow(viewController: LoginViewController())
         FIRApp.configure()
         FIRDatabase.database().persistenceEnabled = true
         return true

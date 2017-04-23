@@ -6,7 +6,7 @@
 //  Copyright © 2017 Christopher Szatmary. All rights reserved.
 //
 
-import CSKitUniversal
+import CSKit
 import TinyConstraints
 import Firebase
 
@@ -15,7 +15,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     //*** Views ***//
     let inputsView: CSTextFieldContainerView = {
         let view = CSTextFieldContainerView(numberOfTextFields: 3, withTitles: ["Name", "Email", "Password"])
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
@@ -26,7 +25,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     let loginRegisterButton = QAButton(image: #imageLiteral(resourceName: "SignInButton"), target: #selector(handleLoginRegisterButtonTouch))
     
     let logoImageView: UIImageView = {
-        let imageView = UIImageView(autoresizingToConstraints: false)
+        let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "QuizLogo")
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -34,7 +33,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     let loginRegisterSegmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Login", "Register"])
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.tintColor = .white
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(handleLoginRegisterChanged), for: .valueChanged)
@@ -81,9 +79,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         //Create loginRegisterButton Constraints
         loginRegisterButton.centerX(to: view)
         loginRegisterButton.topToBottom(of: inputsView, offset: 12)
-        loginRegisterButton.widthWithMultiplier(to: inputsView, multiplier: 1/2)
+        loginRegisterButton.width(to: inputsView, multiplier: 1/2.5)
 //      loginRegisterButton.height(60)
-        loginRegisterButton.heightWithMultiplier(to: view, multiplier: 0.089955)
+//        loginRegisterButton.height(to: view, multiplier: 0.089955)
+        loginRegisterButton.height(to: loginRegisterButton, loginRegisterButton.widthAnchor, multiplier: (40/123))
         
 //      loginRegisterButton.width(to: inputsView)
 //      loginRegisterButton.height(30)
@@ -148,7 +147,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             //Create user object and save it to the database
             let reference = FIRDatabase.database().reference(withPath: "users")
-            let user = User(name: name, email: withEmail, score: 0, questionsAnswered: 0)
+            let user = User(name: name, email: withEmail, score: 0, questionsAnswered: 0, currentQuestionSet: defaultQuestionSet, questions: nil)
             let userRef = reference.child(id)
             userRef.setValue(user.toJSON(), withCompletionBlock: { err, ref in
                 if err.hasValue {
