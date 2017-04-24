@@ -13,7 +13,8 @@ class QuestionViewController: UIViewController {
     
     let questionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Question"
+        label.text = "Loading Question"
+        label.textAlignment = .center
         label.backgroundColor = .white
         label.layer.cornerRadius = 5
         label.layer.masksToBounds = true
@@ -28,9 +29,12 @@ class QuestionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view .backgroundColor = UIColor(hex: 0xD8D8D8)
+        view.backgroundColor = UIColor(hex: 0xD8D8D8)
         setupView()
-        loadQuestions()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        loadQuestionSet()
     }
     
     func setupView() {
@@ -55,7 +59,6 @@ class QuestionViewController: UIViewController {
                 choiceButtons[i].topToBottom(of: questionLabel, offset: 10)
             } else {
                 choiceButtons[i].topToBottom(of: choiceButtons[i-1], offset: view.height*(39/667))
-                //choiceButtons[i].topToBottom(of: choiceButtons[i-1])
             }
             choiceButtons[i].width(to: view, offset: -30)
             choiceButtons[i].height(to: view, multiplier: (70/667))
@@ -66,28 +69,53 @@ class QuestionViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    func handleChoiceButtonTouched(_ sender: CSButton) {
-        if sender == choiceButtons[0] {
-            questionsRef.child("set 1").child("question 1").observeSingleEvent(of: .value, with: { snapshot in
-                let q = Question(snapshot: snapshot)
-                print(q)
-            }, withCancel: nil)
-        } else if sender == choiceButtons[1] {
-            print("Choice 2 selected!")
-        } else if sender == choiceButtons[2] {
-            print("Choice 3 selected!")
-        } else if sender == choiceButtons[3] {
-            print("Choice 4 selected!")
-        }
+    func handleNextQuestionTouched() {
         
     }
     
-    func loadQuestions() {
+    func handleChoiceButtonTouched(_ sender: CSButton) { //Need to increment stats
+        if sender.text == user.questions?[0].answer {
+            sender.backgroundColor = UIColor(hex: 0x80FF00)
+        } else {
+            sender.backgroundColor = .red
+            choiceButtons.forEach({
+                if $0.text == user.questions?[0].answer {
+                    $0.backgroundColor = UIColor(hex: 0x80FF00)
+                }
+            })
+        }
+        choiceButtons.forEach({$0.isEnabled = false})
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next Question", style: .plain, target: self, action: #selector(handleNextQuestionTouched))
+    }
+    
+    func loadQuestionSet() {
+        guard !user.questions.hasValue else {
+            loadNextQuestion()
+            return
+        }
             questionsRef.child("set \((self.user!.questionsAnswered/10) + 1)").observeSingleEvent(of: .value, with: { questionSnapshot in
-                guard questionSnapshot.exists() else { return }
+                guard questionSnapshot.exists() else {
+                    self.questionLabel.text = "All questions answered!"
+                    self.choiceButtons.forEach({
+                        $0.isEnabled = false
+                        $0.setTitle("", for: .normal)
+                    })
+                    return
+                }
                 let values = questionSnapshot.value as! QuestionJSON
                 self.user.generateQuestions(from: values)
+                self.loadNextQuestion()
         })
+    }
+    
+    func loadNextQuestion() {
+        questionLabel.text = user.questions?[0].question
+        for i in 0..<choiceButtons.count {
+            choiceButtons[i].setTitle(user.questions?[0].choices[i], for: .normal)
+            choiceButtons[i].backgroundColor = UIColor(hex: 0x8C8C8C)
+            choiceButtons[i].isEnabled = true
+        }
+        
     }
     
 }
