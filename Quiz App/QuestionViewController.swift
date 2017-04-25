@@ -31,10 +31,8 @@ class QuestionViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xD8D8D8)
         setupView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
         loadQuestionSet()
+        
     }
     
     func setupView() {
@@ -70,12 +68,17 @@ class QuestionViewController: UIViewController {
     }
     
     func handleNextQuestionTouched() {
-        
+        guard user.questions.hasValue else {
+            loadQuestionSet()
+            return
+        }
+        loadNextQuestion()
     }
     
-    func handleChoiceButtonTouched(_ sender: CSButton) { //Need to increment stats
+    func handleChoiceButtonTouched(_ sender: CSButton) {
         if sender.text == user.questions?[0].answer {
             sender.backgroundColor = UIColor(hex: 0x80FF00)
+            user.incrementStats(shouldIncrementScore: true)
         } else {
             sender.backgroundColor = .red
             choiceButtons.forEach({
@@ -83,6 +86,7 @@ class QuestionViewController: UIViewController {
                     $0.backgroundColor = UIColor(hex: 0x80FF00)
                 }
             })
+            user.incrementStats(shouldIncrementScore: false)
         }
         choiceButtons.forEach({$0.isEnabled = false})
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next Question", style: .plain, target: self, action: #selector(handleNextQuestionTouched))
@@ -109,6 +113,7 @@ class QuestionViewController: UIViewController {
     }
     
     func loadNextQuestion() {
+        navigationItem.rightBarButtonItem = nil
         questionLabel.text = user.questions?[0].question
         for i in 0..<choiceButtons.count {
             choiceButtons[i].setTitle(user.questions?[0].choices[i], for: .normal)
