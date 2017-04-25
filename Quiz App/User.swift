@@ -35,7 +35,7 @@ struct User: CustomStringConvertible {
         email = values["email"] as! String
         score = values["score"] as! Int
         questionsAnswered = values["questionsAnswered"] as! Int
-        currentQuestionSet = values["currentQuestionSet"] as! [String]
+        currentQuestionSet = values["currentQuestionSet"].hasValue ? values["currentQuestionSet"] as! [String] : []
         questions = nil
         ref = snapshot.ref
         uid = snapshot.key
@@ -50,6 +50,8 @@ struct User: CustomStringConvertible {
             score += 1
         }
         questionsAnswered += 1
+        questions?.removeFirst()
+        currentQuestionSet.removeFirst()
         ref?.setValue(toJSON())
     }
     
@@ -65,11 +67,6 @@ struct User: CustomStringConvertible {
             }
         }
         self.questions = userQuestions
-    }
-    
-    func nextQuestion() -> Question? {
-        
-        return nil
     }
 }
 
