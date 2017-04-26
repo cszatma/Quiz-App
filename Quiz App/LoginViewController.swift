@@ -187,13 +187,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         inputsViewHeight?.constant = selected == 0 ? view.height/6.67 : view.height/4.446667
     }
     
+    ///Called when the return key is pressed.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == inputsView.textFields?[0] {
-            inputsView.textFields?[1].becomeFirstResponder()
-        } else if textField == inputsView.textFields?[1] {
-            inputsView.textFields?[2].becomeFirstResponder()
-        } else {
+        if textField == inputsView.textFields?.last {
             textField.resignFirstResponder()
+        } else {
+            let index = inputsView.textFields?.index(of: textField)
+            inputsView.textFields?[index! + 1].becomeFirstResponder()
         }
         return true
     }

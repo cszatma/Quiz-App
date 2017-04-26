@@ -21,7 +21,7 @@ class MenuViewController: UIViewController {
     //*** End Views ***//
     
     ///User currently logged in.
-    var user: User?
+    var user: User!
     ///Handle of FIRDatabase observer.
     private var userObserver: FIRObserverHandle?
     
@@ -69,11 +69,12 @@ class MenuViewController: UIViewController {
             //Get current user
             userObserver = usersRef.child(uid!).observe(.value, with: { userSnapshot in
                 self.user = User(snapshot: userSnapshot)
-                self.navigationItem.title = self.user?.name
+                self.navigationItem.title = self.user.name
             })
         }
     }
     
+    ///Called when the user logs out.
     func logoutUser() {
         do {
             try FIRAuth.auth()?.signOut()
@@ -81,26 +82,26 @@ class MenuViewController: UIViewController {
             print(error)
         }
         //Remove observer so it no longer tries to listen when a user signs out.
-        if user.hasValue {
-            FIRDatabase.database().reference().child("users").child(user!.uid!).removeObserver(withHandle: userObserver!)
+        if let observer = userObserver {
+            FIRDatabase.database().reference().child("users").child(user!.uid!).removeObserver(withHandle: observer)
         }
         navigationItem.title = ""
         user = nil
-        let loginViewController = LoginViewController()
-        present(loginViewController, animated: true, completion: nil)
+        present(LoginViewController(), animated: true, completion: nil)
     }
     
-    
+    ///Presents the appropriate ViewController when one of the button's are pressed.
     func handleButtonTouch(_ sender: QAButton) {
+        let controller: QAController
         if sender == questionsButton {
-            let viewController = QuestionViewController()
-            viewController.user = user
-            navigationController?.pushViewController(viewController, animated: true)
+            controller = QuestionViewController()
         } else if sender == statsButton {
-            
+            controller = StatsViewController()
         } else {
-            
+            controller = SettingsViewController()
         }
+        controller.user = user
+        navigationController?.pushViewController(controller as! UIViewController, animated: true)
     }
 
 }

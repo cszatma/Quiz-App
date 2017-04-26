@@ -9,8 +9,9 @@
 import CSKit
 import TinyConstraints
 
-class QuestionViewController: UIViewController {
+class QuestionViewController: UIViewController, QAController {
     
+    //*** Views ***//
     let questionLabel: UILabel = {
         let label = UILabel()
         label.text = "Loading Question"
@@ -21,9 +22,8 @@ class QuestionViewController: UIViewController {
         return label
     }()
     
-    let statsButton = QAButton(image: #imageLiteral(resourceName: "StatsButton"), target: #selector(handleBack))
-    
     let choiceButtons = [CSButton(), CSButton(), CSButton(), CSButton()]
+    //*** End Views ***//
     
     var user: User!
     
@@ -32,19 +32,19 @@ class QuestionViewController: UIViewController {
         view.backgroundColor = UIColor(hex: 0xD8D8D8)
         setupView()
         loadQuestionSet()
-        
     }
     
+    ///Sets up all the views, adding the necessary constraints.
     func setupView() {
         view.addSubview(questionLabel)
         questionLabel.centerX(to: view)
         questionLabel.top(to: view, offset: 75)
-//        questionLabel.widthWithMultiplier(to: view, multiplier: (71/75))
-        questionLabel.width(to: view, offset: -20)
+        questionLabel.width(to: view, offset: -20) //71/75
         questionLabel.height(to: view, multiplier: (165/667))
         setupButtons()
     }
     
+    ///Sets up the choice buttons.
     func setupButtons() {
         for i in 0..<choiceButtons.count {
             view.addSubview(choiceButtons[i])
@@ -63,23 +63,21 @@ class QuestionViewController: UIViewController {
         }
     }
     
-    func handleBack() {
-        navigationController?.popViewController(animated: true)
-    }
-    
+    ///Called when Next Question BarButton is touched. Displays the next question to the user.
     func handleNextQuestionTouched() {
-        guard user.questions.hasValue else {
+        guard user.questions.hasValue else { //Load next set if current set is finished.
             loadQuestionSet()
             return
         }
         loadNextQuestion()
     }
     
+    ///Called when the user selects a choice. The user will then be alerted whether or not it is the right answer.
     func handleChoiceButtonTouched(_ sender: CSButton) {
-        if sender.text == user.questions?[0].answer {
+        if sender.text == user.questions?[0].answer { //Handle correct answer.
             sender.backgroundColor = UIColor(hex: 0x80FF00)
             user.incrementStats(shouldIncrementScore: true)
-        } else {
+        } else { //Handle incorrect answer.
             sender.backgroundColor = .red
             choiceButtons.forEach({
                 if $0.text == user.questions?[0].answer {
@@ -92,26 +90,29 @@ class QuestionViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next Question", style: .plain, target: self, action: #selector(handleNextQuestionTouched))
     }
     
+    ///Loads the next available set of questions from the database.
     func loadQuestionSet() {
-        guard !user.questions.hasValue else {
+        guard !user.questions.hasValue else { //If a set is already loaded just load the next question in the set.
             loadNextQuestion()
             return
         }
-            questionsRef.child("set \((self.user!.questionsAnswered/10) + 1)").observeSingleEvent(of: .value, with: { questionSnapshot in
-                guard questionSnapshot.exists() else {
-                    self.questionLabel.text = "All questions answered!"
-                    self.choiceButtons.forEach({
-                        $0.isEnabled = false
-                        $0.setTitle("", for: .normal)
-                    })
-                    return
-                }
-                let values = questionSnapshot.value as! QuestionJSON
-                self.user.generateQuestions(from: values)
-                self.loadNextQuestion()
+        //Fetch new set.
+        questionsRef.child("set \((self.user!.questionsAnswered/10) + 1)").observeSingleEvent(of: .value, with: { questionSnapshot in
+            guard questionSnapshot.exists() else {
+                self.questionLabel.text = "All questions answered!"
+                self.choiceButtons.forEach({
+                    $0.isEnabled = false
+                    $0.setTitle("", for: .normal)
+                })
+                return
+            }
+            let values = questionSnapshot.value as! QuestionJSON
+            self.user.generateQuestions(from: values)
+            self.loadNextQuestion()
         })
     }
     
+    ///Gets the next question from the user's questions array and sets up the questionLabel and choiceButtons.
     func loadNextQuestion() {
         navigationItem.rightBarButtonItem = nil
         questionLabel.text = user.questions?[0].question
