@@ -53,6 +53,9 @@ struct User: CustomStringConvertible {
         questions?.removeFirst()
         currentQuestionSet.removeFirst()
         ref?.setValue(toJSON())
+        if questions?.count == 0 {
+            questions = nil
+        }
     }
     
     var description: String {
@@ -61,6 +64,9 @@ struct User: CustomStringConvertible {
     
     mutating func generateQuestions(from json: QuestionJSON) {
         var userQuestions = Questions()
+        if currentQuestionSet.isEmpty {
+            currentQuestionSet = defaultQuestionSet
+        }
         for i in 1...10 {
             if currentQuestionSet.contains("question \(i)") {
                 userQuestions.append(Question(json: json["question \(i)"] as! QuestionJSON))
