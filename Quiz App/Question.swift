@@ -44,6 +44,10 @@ struct Question: CustomStringConvertible {
         return "{Question: \(question), Answer: \(answer), Choices: \(choices)}"
     }
     
+    func toJSON() -> QuestionJSON {
+        return ["question": question, "answer": answer, "choices": choices]
+    }
+    
 }
 
 let questionsRef = FIRDatabase.database().reference().child("question-objects")
