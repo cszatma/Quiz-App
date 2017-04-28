@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+///A QAController is a template for a ViewController that stores the value of the user currently logged in.
+protocol QAController: class {
+    
+    var user: User! { get set }
+    
+}
