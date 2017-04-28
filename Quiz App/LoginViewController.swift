@@ -22,6 +22,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return view
     }()
     
+    let forgotPasswordButton: CSButton = {
+        let button = CSButton()
+        button.setTitle("Forgot Your Password?", for: .normal)
+        button.cornerRadius = 5
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(handleForgotPasswordButtonTouch), for: .touchUpInside)
+        return button
+    }()
+    
     let loginRegisterButton = QAButton(image: #imageLiteral(resourceName: "SignInButton"), target: #selector(handleLoginRegisterButtonTouch))
     
     let logoImageView: UIImageView = {
@@ -66,6 +75,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func setupView() {
         //Add all subviews
         view.addSubview(inputsView)
+        view.addSubview(forgotPasswordButton)
         view.addSubview(loginRegisterButton)
         view.addSubview(loginRegisterSegmentedControl)
         view.addSubview(logoImageView)
@@ -76,9 +86,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         inputsViewHeight = inputsView.height(view.height/6.67)
 //      inputsViewHeight = inputsView.height(100)
         
+        forgotPasswordButton.centerX(to: view)
+        forgotPasswordButton.topToBottom(of: inputsView, offset: 12)
+        forgotPasswordButton.width(to: inputsView)
+        forgotPasswordButton.height(to: inputsView.textFields![1])
+        
         //Create loginRegisterButton Constraints
         loginRegisterButton.centerX(to: view)
-        loginRegisterButton.topToBottom(of: inputsView, offset: 12)
+        loginRegisterButton.topToBottom(of: forgotPasswordButton, offset: 12)
         loginRegisterButton.width(to: inputsView, multiplier: 1/2.5)
 //      loginRegisterButton.height(60)
 //        loginRegisterButton.height(to: view, multiplier: 0.089955)
@@ -187,10 +202,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         inputsViewHeight?.constant = selected == 0 ? view.height/6.67 : view.height/4.446667
     }
     
+    func handleForgotPasswordButtonTouch() {
+        
+    }
+    
     ///Called when the return key is pressed.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == inputsView.textFields?.last {
             textField.resignFirstResponder()
+            loginRegisterButton.sendActions(for: .touchUpInside)
         } else {
             let index = inputsView.textFields?.index(of: textField)
             inputsView.textFields?[index! + 1].becomeFirstResponder()
