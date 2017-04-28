@@ -74,10 +74,6 @@ struct User: CustomStringConvertible {
         }
         self.questions = userQuestions
     }
-    
-    var description: String {
-        return "User: {\(name), \(email), \(score), \(questionsAnswered)}"
-    }
 }
 
 let usersRef = FIRDatabase.database().reference().child("users")

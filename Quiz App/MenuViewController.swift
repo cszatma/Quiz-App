@@ -13,10 +13,6 @@ import Firebase
 typealias FIRObserverHandle = UInt
 
 class MenuViewController: UIViewController {
-    ///User currently logged in.
-    var user: User?
-    ///Handle of FIRDatabase observer.
-    private var observer: UInt?
     
     //*** Views ***//
     let questionsButton = QAButton(image: #imageLiteral(resourceName: "QuestionButton"), target: #selector(handleButtonTouch(_:)))
