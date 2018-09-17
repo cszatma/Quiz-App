@@ -1,7 +1,4 @@
-//
-//    MIT License
-//
-//    Copyright (c) 2017 Robert-Hein Hooijmans <rh.hooijmans@gmail.com>
+//    Copyright (c) 2017 Christopher Szatmary <cs@christopherszatmary.com>
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -21,28 +18,40 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //    THE SOFTWARE.
 
-import Foundation
-
-#if os(OSX)
+#if os(macOS)
     import AppKit
-    
-    public typealias View = NSView
-    public typealias LayoutGuide = NSLayoutGuide
-    public typealias ConstraintAxis = NSLayoutConstraint.Orientation
-    public typealias LayoutPriority = NSLayoutConstraint.Priority
-    public typealias TinyEdgeInsets = NSEdgeInsets
-    
-    public extension NSEdgeInsets {
-        static var zero = NSEdgeInsetsZero
-    }
 #else
     import UIKit
-    
-    public typealias View = UIView
-    public typealias LayoutGuide = UILayoutGuide
-    public typealias ConstraintAxis = UILayoutConstraintAxis
-    public typealias LayoutPriority = UILayoutPriority
-    
-    public typealias TinyEdgeInsets = UIEdgeInsets
 #endif
 
+public extension HCButton {
+    #if os(iOS) || os(tvOS)
+    /// The borderWidth of the Button.
+    @IBInspectable public var borderWidth: CGFloat {
+        get {
+            return layer.borderWidth
+        }
+
+        set {
+            layer.borderWidth = newValue
+        }
+    }
+
+    /// The borderColor of the Button.
+    @IBInspectable public var borderColor: CGColor? {
+        get {
+            return layer.borderColor
+        }
+
+        set {
+            layer.borderColor = newValue
+        }
+    }
+
+    /// The current text that is displayed by the button.
+    public var text: String {
+        get { return self.titleLabel?.text ?? "" }
+        set { titleLabel?.text = newValue }
+    }
+    #endif
+}

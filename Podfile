@@ -9,7 +9,8 @@ target 'Quiz App' do
 pod 'Firebase/Core'
 pod 'Firebase/Database'
 pod 'Firebase/Auth'
-pod 'TinyConstraints'
+pod 'TinyConstraints', '~> 3.2'
+pod 'HotCocoa', '~> 1.0'
   target 'Quiz AppTests' do
     inherit! :search_paths
     # Pods for testing

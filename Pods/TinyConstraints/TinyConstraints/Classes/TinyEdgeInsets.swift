@@ -22,63 +22,45 @@
 //    THE SOFTWARE.
 //
 
+import Foundation
+
 #if os(OSX)
     import AppKit
 #else
     import UIKit
 #endif
 
-public typealias Constraint = NSLayoutConstraint
-public typealias Constraints = [Constraint]
-
-public enum ConstraintRelation: Int {
-    case equal = 0
-    case equalOrLess = -1
-    case equalOrGreater = 1
-}
-
-public extension Collection where Iterator.Element == Constraint {
+extension TinyEdgeInsets {
     
-    func activate() {
-        
-        if let constraints = self as? Constraints {
-            Constraint.activate(constraints)
-        }
+    public static func uniform(_ value: CGFloat) -> TinyEdgeInsets {
+        return TinyEdgeInsets(top: value, left: value, bottom: value, right: value)
     }
     
-    func deActivate() {
-        
-        if let constraints = self as? Constraints {
-            Constraint.deactivate(constraints)
-        }
+    public static func top(_ value: CGFloat) -> TinyEdgeInsets {
+        return TinyEdgeInsets(top: value, left: 0, bottom: 0, right: 0)
+    }
+    
+    public static func left(_ value: CGFloat) -> TinyEdgeInsets {
+        return TinyEdgeInsets(top: 0, left: value, bottom: 0, right: 0)
+    }
+    
+    public static func bottom(_ value: CGFloat) -> TinyEdgeInsets {
+        return TinyEdgeInsets(top: 0, left: 0, bottom: value, right: 0)
+    }
+    
+    public static func right(_ value: CGFloat) -> TinyEdgeInsets {
+        return TinyEdgeInsets(top: 0, left: 0, bottom: 0, right: value)
+    }
+    
+    public static func horizontal(_ value: CGFloat) -> TinyEdgeInsets {
+        return TinyEdgeInsets(top: 0, left: value, bottom: 0, right: value)
+    }
+    
+    public static func vertical(_ value: CGFloat) -> TinyEdgeInsets {
+        return TinyEdgeInsets(top: value, left: 0, bottom: value, right: 0)
     }
 }
 
-#if os(OSX)
-public extension Constraint {
-    @objc
-    func with(_ p: Constraint.Priority) -> Self {
-        priority = p
-        return self
-    }
-
-    func set(active: Bool) -> Self {
-        isActive = active
-        return self
-    }
+public func + (lhs: TinyEdgeInsets, rhs: TinyEdgeInsets) -> TinyEdgeInsets {
+    return .init(top: lhs.top + rhs.top, left: lhs.left + rhs.left, bottom: lhs.bottom + rhs.bottom, right: lhs.right + rhs.right)
 }
-#else
-    public extension Constraint {
-        @objc
-        func with(_ p: LayoutPriority) -> Self {
-            priority = p
-            return self
-        }
-        
-        func set(active: Bool) -> Self {
-            isActive = active
-            return self
-        }
-}
-#endif
-

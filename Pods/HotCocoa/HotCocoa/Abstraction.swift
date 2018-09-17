@@ -1,7 +1,4 @@
-//
-//    MIT License
-//
-//    Copyright (c) 2017 Robert-Hein Hooijmans <rh.hooijmans@gmail.com>
+//    Copyright (c) 2017 Christopher Szatmary <cs@christopherszatmary.com>
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -23,26 +20,26 @@
 
 import Foundation
 
-#if os(OSX)
+#if os(macOS)
     import AppKit
-    
-    public typealias View = NSView
-    public typealias LayoutGuide = NSLayoutGuide
-    public typealias ConstraintAxis = NSLayoutConstraint.Orientation
-    public typealias LayoutPriority = NSLayoutConstraint.Priority
-    public typealias TinyEdgeInsets = NSEdgeInsets
-    
-    public extension NSEdgeInsets {
-        static var zero = NSEdgeInsetsZero
-    }
+
+    public typealias HCButton = NSButton
+    public typealias HCColor = NSColor
+    public typealias HCStoryboardSegue = NSStoryboardSegue
+    public typealias HCTableView = NSTableView
+    public typealias HCTextField = NSTextField
+    public typealias HCViewController = NSViewController
+    public typealias HCView = NSView
+    public typealias HCWindow = NSWindow
 #else
     import UIKit
-    
-    public typealias View = UIView
-    public typealias LayoutGuide = UILayoutGuide
-    public typealias ConstraintAxis = UILayoutConstraintAxis
-    public typealias LayoutPriority = UILayoutPriority
-    
-    public typealias TinyEdgeInsets = UIEdgeInsets
-#endif
 
+    public typealias HCButton = UIButton
+    public typealias HCColor = UIColor
+    public typealias HCStoryboardSegue = UIStoryboardSegue
+    public typealias HCTableView = UITableView
+    public typealias HCTextField = UITextField
+    public typealias HCViewController = UIViewController
+    public typealias HCView = UIView
+    public typealias HCWindow = UIWindow
+#endif

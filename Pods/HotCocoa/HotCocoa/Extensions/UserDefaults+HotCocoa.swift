@@ -1,7 +1,4 @@
-//
-//    MIT License
-//
-//    Copyright (c) 2017 Robert-Hein Hooijmans <rh.hooijmans@gmail.com>
+//    Copyright (c) 2017 Christopher Szatmary <cs@christopherszatmary.com>
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -23,26 +20,27 @@
 
 import Foundation
 
-#if os(OSX)
-    import AppKit
-    
-    public typealias View = NSView
-    public typealias LayoutGuide = NSLayoutGuide
-    public typealias ConstraintAxis = NSLayoutConstraint.Orientation
-    public typealias LayoutPriority = NSLayoutConstraint.Priority
-    public typealias TinyEdgeInsets = NSEdgeInsets
-    
-    public extension NSEdgeInsets {
-        static var zero = NSEdgeInsetsZero
+public extension UserDefaults {
+    /**
+     Returns the codable object associated with the specified key.
+     - parameter type: The type of the object being returned.
+     - parameter forKey: They key associated with the data.
+     - returns: The object associated with the specified key, or nil if the key was not found.
+     - throws: An error if the data throws an error during decoding.
+    */
+    public func get<T: Codable>(type: T.Type, forKey key: String) throws -> T? {
+        guard let data = object(forKey: key) as? Data else { return nil }
+        
+        return try PropertyListDecoder().decode(type, from: data)
     }
-#else
-    import UIKit
     
-    public typealias View = UIView
-    public typealias LayoutGuide = UILayoutGuide
-    public typealias ConstraintAxis = UILayoutConstraintAxis
-    public typealias LayoutPriority = UILayoutPriority
-    
-    public typealias TinyEdgeInsets = UIEdgeInsets
-#endif
-
+    /**
+     Sets the value of the specified key.
+     - parameter object: The object to store in the defaults database.
+     - parameter forKey: They key associated with the data.
+     - throws: An error if the object throws an error during encoding.
+     */
+    public func set<T: Codable>(object: T, forKey key: String) throws {
+        set(try PropertyListEncoder().encode(object), forKey: key)
+    }
+}
