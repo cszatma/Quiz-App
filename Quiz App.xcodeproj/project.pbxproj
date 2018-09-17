@@ -145,15 +145,32 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E3741F031EB00B650095B935 /* Protocols */ = {
+		E3C91092214F10C200FCCA60 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E3C91093214F130A00FCCA60 /* TinyContraintsAdditions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		E3C91095214F50CE00FCCA60 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E3D36D3B1E986A9100F673F1 /* Question.swift */,
+				E3FD33501EA4717E006D8AE6 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E3C91096214F50E200FCCA60 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
 				E3741F011EB00B5E0095B935 /* QAController.swift */,
 			);
-			name = Protocols;
+			path = Protocols;
 			sourceTree = "<group>";
 		};
-		E3C2D3051EA1839D00CFDDCF /* Controllers */ = {
+		E3C91097214F50F900FCCA60 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E3C2D3091EA19C2C00CFDDCF /* LoginViewController.swift */,
@@ -162,24 +179,16 @@
 				E3741EFD1EB001230095B935 /* StatsViewController.swift */,
 				E3741EFF1EB0012C0095B935 /* SettingsViewController.swift */,
 			);
-			name = Controllers;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		E3C2D3061EA183AB00CFDDCF /* Data Types */ = {
+		E3C91098214F511000FCCA60 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E3D36D3B1E986A9100F673F1 /* Question.swift */,
-				E3FD33501EA4717E006D8AE6 /* User.swift */,
+				E3C9108F214F106200FCCA60 /* CSTextFieldContainerView.swift */,
+				E3F8008A1EA82E970058F908 /* QAButton.swift */,
 			);
-			name = "Data Types";
-			sourceTree = "<group>";
-		};
-		E3C91092214F10C200FCCA60 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				E3C91093214F130A00FCCA60 /* TinyContraintsAdditions.swift */,
-			);
-			path = Utils;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		E3D36D011E986A1C00F673F1 = {
@@ -208,10 +217,10 @@
 			isa = PBXGroup;
 			children = (
 				E3D36D0D1E986A1C00F673F1 /* AppDelegate.swift */,
-				E3C2D3051EA1839D00CFDDCF /* Controllers */,
-				E3F8008C1EA82EA10058F908 /* Views */,
-				E3C2D3061EA183AB00CFDDCF /* Data Types */,
-				E3741F031EB00B650095B935 /* Protocols */,
+				E3C91097214F50F900FCCA60 /* Controllers */,
+				E3C91098214F511000FCCA60 /* Views */,
+				E3C91095214F50CE00FCCA60 /* Models */,
+				E3C91096214F50E200FCCA60 /* Protocols */,
 				E3C91092214F10C200FCCA60 /* Utils */,
 				E3D36D141E986A1C00F673F1 /* Assets.xcassets */,
 				E3D36D161E986A1C00F673F1 /* LaunchScreen.storyboard */,
@@ -237,15 +246,6 @@
 				E3D36D2F1E986A1D00F673F1 /* Info.plist */,
 			);
 			path = "Quiz AppUITests";
-			sourceTree = "<group>";
-		};
-		E3F8008C1EA82EA10058F908 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				E3C9108F214F106200FCCA60 /* CSTextFieldContainerView.swift */,
-				E3F8008A1EA82E970058F908 /* QAButton.swift */,
-			);
-			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
