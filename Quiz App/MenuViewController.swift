@@ -6,9 +6,9 @@
 //  Copyright © 2017 Christopher Szatmary. All rights reserved.
 //
 
-import CSKit
-import TinyConstraints
 import Firebase
+import HotCocoa
+import TinyConstraints
 
 typealias FIRObserverHandle = UInt
 
@@ -41,17 +41,17 @@ class MenuViewController: UIViewController {
         
         statsButton.center(in: view)
         statsButton.width(to: view, multiplier: 1/2)
-        statsButton.height(to: statsButton, statsButton.widthAnchor, multiplier: (40/149)) //40/139
+        statsButton.height(to: statsButton, statsButton.widthAnchor, multiplier: (40 / 149)) //40/139
         //statsButton.height(to: view, multiplier: 0.089955)
         
         questionsButton.centerX(to: view)
-        questionsButton.bottomToTop(of: statsButton, offset: -view.height/7)
+        questionsButton.bottomToTop(of: statsButton, offset: -view.frameHeight / 7)
         //questionsButton.top(to: view, offset: navigationController!.navigationBar.height + 50)
         questionsButton.width(to: statsButton)
         questionsButton.height(to: statsButton, multiplier: 1)
         
         settingsButton.centerX(to: view)
-        settingsButton.topToBottom(of: statsButton, offset: view.height/7)
+        settingsButton.topToBottom(of: statsButton, offset: view.frameHeight / 7)
         settingsButton.width(to: statsButton)
         settingsButton.height(to: statsButton)
     }
@@ -75,7 +75,7 @@ class MenuViewController: UIViewController {
     }
     
     ///Called when the user logs out.
-    func logoutUser() {
+    @objc func logoutUser() {
         do {
             try FIRAuth.auth()?.signOut()
         } catch let error {
@@ -91,7 +91,7 @@ class MenuViewController: UIViewController {
     }
     
     ///Presents the appropriate ViewController when one of the button's are pressed.
-    func handleButtonTouch(_ sender: QAButton) {
+    @objc func handleButtonTouch(_ sender: QAButton) {
         let controller: QAController
         if sender == questionsButton {
             controller = QuestionViewController()

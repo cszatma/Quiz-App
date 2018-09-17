@@ -6,15 +6,15 @@
 //  Copyright © 2017 Christopher Szatmary. All rights reserved.
 //
 
-import CSKit
-import TinyConstraints
 import Firebase
+import HotCocoa
+import TinyConstraints
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //*** Views ***//
     let inputsView: CSTextFieldContainerView = {
-        let view = CSTextFieldContainerView(numberOfTextFields: 3, withTitles: ["Name", "Email", "Password"])
+        let view = CSTextFieldContainerView(numberOfTextFields: 3, withPlaceholders: ["Name", "Email", "Password"])
         view.backgroundColor = .white
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
@@ -22,8 +22,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return view
     }()
     
-    let forgotPasswordButton: CSButton = {
-        let button = CSButton()
+    let forgotPasswordButton: UIButton = {
+        let button = UIButton()
         button.setTitle("Forgot Your Password?", for: .normal)
         button.cornerRadius = 5
         button.setTitleColor(.white, for: .normal)
@@ -59,16 +59,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         //Setup all the views and constraints
         setupView()
         
-        inputsView.textFields?[2].isSecureTextEntry = true
+        inputsView.textFields[2].isSecureTextEntry = true
         //Set delegates for each textfield.
-        for textField in inputsView.textFields! {
+        for textField in inputsView.textFields {
             textField.delegate = self
         }
         self.hideKeyboardWhenTappedAround()
     }
     
     override func viewDidLayoutSubviews() {
-        loginRegisterSegmentedControl.setTitleTextAttributes([NSFontAttributeName: inputsView.textFields![0].font!], for: .normal)
+        loginRegisterSegmentedControl.setTitleTextAttributes([kCTFontAttributeName: inputsView.textFields[0].font!], for: .normal)
     }
     
     ///Sets up all the views.
@@ -83,21 +83,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         //Create inputsView Constraints
         inputsView.center(in: view)
         inputsView.width(to: view, offset: -24)
-        inputsViewHeight = inputsView.height(view.height/6.67)
+        inputsViewHeight = inputsView.height(view.frameHeight / 6.67)
 //      inputsViewHeight = inputsView.height(100)
         
         forgotPasswordButton.centerX(to: view)
         forgotPasswordButton.topToBottom(of: inputsView, offset: 12)
         forgotPasswordButton.width(to: inputsView)
-        forgotPasswordButton.height(to: inputsView.textFields![1])
+        forgotPasswordButton.height(to: inputsView.textFields[1])
         
         //Create loginRegisterButton Constraints
         loginRegisterButton.centerX(to: view)
         loginRegisterButton.topToBottom(of: forgotPasswordButton, offset: 12)
-        loginRegisterButton.width(to: inputsView, multiplier: 1/2.5)
+        loginRegisterButton.width(to: inputsView, multiplier: 1 / 2.5)
 //      loginRegisterButton.height(60)
 //        loginRegisterButton.height(to: view, multiplier: 0.089955)
-        loginRegisterButton.height(to: loginRegisterButton, loginRegisterButton.widthAnchor, multiplier: (40/123))
+        loginRegisterButton.height(to: loginRegisterButton, loginRegisterButton.widthAnchor, multiplier: (40 / 123))
         
 //      loginRegisterButton.width(to: inputsView)
 //      loginRegisterButton.height(30)
@@ -106,13 +106,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginRegisterSegmentedControl.centerX(to: view)
         loginRegisterSegmentedControl.bottomToTop(of: inputsView, offset: -12)
         loginRegisterSegmentedControl.width(to: inputsView)
-        loginRegisterSegmentedControl.height(view.height/18.52778)
+        loginRegisterSegmentedControl.height(view.frameHeight / 18.52778)
 //      loginRegisterSegmentedControl.height(36)
         
         //Create logoImageView Constraints
         logoImageView.centerX(to: view)
         logoImageView.bottomToTop(of: loginRegisterSegmentedControl, offset: -12)
-        let side = view.height/4.446667
+        let side = view.frameHeight / 4.446667
         logoImageView.size(CGSize(width: side, height: side))
 //      logoImageView.width(150)
 //      logoImageView.height(150)
@@ -122,8 +122,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return .lightContent
     }
     
-    func handleLoginRegisterButtonTouch() {
-        guard let email = inputsView.textFields?[1].text, let password = inputsView.textFields?[2].text else {
+    @objc func handleLoginRegisterButtonTouch() {
+        guard let email = inputsView.textFields[1].text, let password = inputsView.textFields[2].text else {
             return
         }
         
@@ -140,7 +140,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     ///Called when the user tries to sign up.
     func registerUser(withEmail: String, password: String) {
-        guard let name = inputsView.textFields?[0].text else {
+        guard let name = inputsView.textFields[0].text else {
             return
         }
         
@@ -150,9 +150,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         //Create user
-        FIRAuth.auth()?.createUser(withEmail: withEmail, password: password, completion: { authUser, error in
-            if error.hasValue {
-                self.displayErrorMessage(errorTitle: "Error", errorMessage: error!.localizedDescription, buttonTitle: "Ok")
+        FIRAuth.auth()?.createUser(withEmail: withEmail, password: password, completion: { authUser, err in
+            if let error = err {
+                self.displayAlertController(title: "Error", message: error.localizedDescription, actions: [UIAlertAction(title: "Ok", style: .default)])
                 return
             }
             
@@ -165,8 +165,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             let user = User(name: name, email: withEmail, score: 0, questionsAnswered: 0, currentQuestionSet: defaultQuestionSet, questions: nil)
             let userRef = reference.child(id)
             userRef.setValue(user.toJSON(), withCompletionBlock: { err, ref in
-                if err.hasValue {
-                    print(err!)
+                if let error = err {
+                    print(error)
                     return
                 }
                 
@@ -178,9 +178,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     ///Called when user tries to sign in.
     func logInUser(withEmail: String, password: String) {
-        FIRAuth.auth()?.signIn(withEmail: withEmail, password: password, completion: { user, error in
-            if error.hasValue {
-                self.displayErrorMessage(errorTitle: "Error", errorMessage: error!.localizedDescription, buttonTitle: "Ok")
+        FIRAuth.auth()?.signIn(withEmail: withEmail, password: password, completion: { user, err in
+            if let error = err {
+                self.displayAlertController(title: "Error", message: error.localizedDescription, actions: [UIAlertAction(title: "Ok", style: .default)])
                 return
             }
             
@@ -190,7 +190,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     ///Executed when the value of the loginRegisterSegmentedControl is changed.
-    func handleLoginRegisterChanged() {
+    @objc func handleLoginRegisterChanged() {
         let selected = loginRegisterSegmentedControl.selectedSegmentIndex
         let image = selected == 0 ? #imageLiteral(resourceName: "SignInButton") : #imageLiteral(resourceName: "SignUpButton")
         loginRegisterButton.setBackgroundImage(image, for: .normal)
@@ -199,21 +199,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         //Adjust inputsView
 //      inputsViewHeight?.constant = selected == 0 ? 100 : 150
-        inputsViewHeight?.constant = selected == 0 ? view.height/6.67 : view.height/4.446667
+        inputsViewHeight?.constant = selected == 0 ? view.frameHeight / 6.67 : view.frameHeight / 4.446667
     }
     
-    func handleForgotPasswordButtonTouch() {
+    @objc func handleForgotPasswordButtonTouch() {
         
     }
     
     ///Called when the return key is pressed.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == inputsView.textFields?.last {
+        if textField == inputsView.textFields.last {
             textField.resignFirstResponder()
             loginRegisterButton.sendActions(for: .touchUpInside)
         } else {
-            let index = inputsView.textFields?.index(of: textField)
-            inputsView.textFields?[index! + 1].becomeFirstResponder()
+            let index = inputsView.textFields.index(of: textField)
+            inputsView.textFields[index! + 1].becomeFirstResponder()
         }
         return true
     }

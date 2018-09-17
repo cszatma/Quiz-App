@@ -35,7 +35,7 @@ struct User: CustomStringConvertible {
         email = values["email"] as! String
         score = values["score"] as! Int
         questionsAnswered = values["questionsAnswered"] as! Int
-        currentQuestionSet = values["currentQuestionSet"].hasValue ? values["currentQuestionSet"] as! [String] : []
+        currentQuestionSet = (values["currentQuestionSet"] ?? []) as! [String]
         questions = nil
         ref = snapshot.ref
         uid = snapshot.key

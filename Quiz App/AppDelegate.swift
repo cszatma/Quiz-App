@@ -6,8 +6,8 @@
 //  Copyright © 2017 Christopher Szatmary. All rights reserved.
 //
 
-import CSKit
 import Firebase
+import HotCocoa
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        window = CSWindow(viewController: UINavigationController(rootViewController: MenuViewController()))
+        window = UIWindow(rootViewController: UINavigationController(rootViewController: MenuViewController()))
         //window = CSWindow(viewController: LoginViewController())
         FIRApp.configure()
         FIRDatabase.database().persistenceEnabled = true

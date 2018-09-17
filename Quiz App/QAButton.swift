@@ -6,9 +6,9 @@
 //  Copyright © 2017 Christopher Szatmary. All rights reserved.
 //
 
-import CSKit
+import UIKit
 
-class QAButton: CSButton {
+class QAButton: UIButton {
     
     init(image: UIImage, target: Selector) {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))

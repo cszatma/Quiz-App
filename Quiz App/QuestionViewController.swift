@@ -6,8 +6,8 @@
 //  Copyright © 2017 Christopher Szatmary. All rights reserved.
 //
 
-import CSKit
 import TinyConstraints
+import HotCocoa
 
 class QuestionViewController: UIViewController, QAController {
     
@@ -22,7 +22,7 @@ class QuestionViewController: UIViewController, QAController {
         return label
     }()
     
-    let choiceButtons = [CSButton(), CSButton(), CSButton(), CSButton()]
+    let choiceButtons = [UIButton(), UIButton(), UIButton(), UIButton()]
     //*** End Views ***//
     
     var user: User!
@@ -40,7 +40,7 @@ class QuestionViewController: UIViewController, QAController {
         questionLabel.centerX(to: view)
         questionLabel.top(to: view, offset: 75)
         questionLabel.width(to: view, offset: -20) //71/75
-        questionLabel.height(to: view, multiplier: (165/667))
+        questionLabel.height(to: view, multiplier: (165 / 667))
         setupButtons()
     }
     
@@ -56,7 +56,7 @@ class QuestionViewController: UIViewController, QAController {
             if i == 0 {
                 choiceButtons[i].topToBottom(of: questionLabel, offset: 10)
             } else {
-                choiceButtons[i].topToBottom(of: choiceButtons[i-1], offset: view.height*(39/667))
+                choiceButtons[i].topToBottom(of: choiceButtons[i-1], offset: view.frameHeight * (39 / 667))
             }
             choiceButtons[i].width(to: view, offset: -30)
             choiceButtons[i].height(to: view, multiplier: (70/667))
@@ -64,8 +64,8 @@ class QuestionViewController: UIViewController, QAController {
     }
     
     ///Called when Next Question BarButton is touched. Displays the next question to the user.
-    func handleNextQuestionTouched() {
-        guard user.questions.hasValue else { //Load next set if current set is finished.
+    @objc func handleNextQuestionTouched() {
+        guard user.questions != nil else { //Load next set if current set is finished.
             loadQuestionSet()
             return
         }
@@ -73,7 +73,7 @@ class QuestionViewController: UIViewController, QAController {
     }
     
     ///Called when the user selects a choice. The user will then be alerted whether or not it is the right answer.
-    func handleChoiceButtonTouched(_ sender: CSButton) {
+    @objc func handleChoiceButtonTouched(_ sender: UIButton) {
         if sender.text == user.questions?[0].answer { //Handle correct answer.
             sender.backgroundColor = UIColor(hex: 0x80FF00)
             user.incrementStats(shouldIncrementScore: true)
@@ -92,7 +92,7 @@ class QuestionViewController: UIViewController, QAController {
     
     ///Loads the next available set of questions from the database.
     func loadQuestionSet() {
-        guard !user.questions.hasValue else { //If a set is already loaded just load the next question in the set.
+        guard user.questions == nil else { //If a set is already loaded just load the next question in the set.
             loadNextQuestion()
             return
         }

@@ -6,7 +6,7 @@
 //  Copyright © 2017 Christopher Szatmary. All rights reserved.
 //
 
-import CSKit
+import UIKit
 
 class SettingsViewController: UIViewController, QAController {
     

@@ -6,7 +6,7 @@
 //  Copyright © 2017 Christopher Szatmary. All rights reserved.
 //
 
-import CSKit
+import UIKit
 
 class StatsViewController: UIViewController, QAController {
     
@@ -48,12 +48,12 @@ class StatsViewController: UIViewController, QAController {
         questionsAnsweredLabel.text?.append(String(user.questionsAnswered))
         
         correctAnswersLabel.centerX(to: view)
-        correctAnswersLabel.top(to: view, offset: view.height / 3)
+        correctAnswersLabel.top(to: view, offset: view.frameHeight / 3)
         correctAnswersLabel.width(to: view, multiplier: 1/2)
         correctAnswersLabel.height(to: view, multiplier: 1/7)
         
         questionsAnsweredLabel.centerX(to: view)
-        questionsAnsweredLabel.topToBottom(of: correctAnswersLabel, offset: correctAnswersLabel.height)
+        questionsAnsweredLabel.topToBottom(of: correctAnswersLabel, offset: correctAnswersLabel.frameHeight)
         questionsAnsweredLabel.width(to: correctAnswersLabel)
         questionsAnsweredLabel.height(to: correctAnswersLabel)
     }
